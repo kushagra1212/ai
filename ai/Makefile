@@ -57,6 +57,45 @@ $(BUILD_DIR)/mnist_cnn_train: 28_real_mnist_cnn_brain.cpp | $(BUILD_DIR)
 train-28: $(BUILD_DIR)/mnist_cnn_train
 	./$(BUILD_DIR)/mnist_cnn_train
 
+# Program 29 Targets (Text Codebook & Next-Letter Predictor)
+build-29: $(BUILD_DIR)/text_codebook_and_next_char
+
+$(BUILD_DIR)/text_codebook_and_next_char: 29_text_codebook_and_next_char.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+run-29: $(BUILD_DIR)/text_codebook_and_next_char
+	./$(BUILD_DIR)/text_codebook_and_next_char
+
+# Program 30 Targets (Word Codebook & Trigram Story Generator)
+build-30: $(BUILD_DIR)/word_codebook_and_ngram
+
+$(BUILD_DIR)/word_codebook_and_ngram: 30_word_codebook_and_ngram.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+run-30: $(BUILD_DIR)/word_codebook_and_ngram
+	./$(BUILD_DIR)/word_codebook_and_ngram
+
+# Program 31 Targets (Word Coordinates / Embeddings)
+build-31: $(BUILD_DIR)/word_embeddings
+
+$(BUILD_DIR)/word_embeddings: 31_word_embeddings.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+run-31: $(BUILD_DIR)/word_embeddings
+	./$(BUILD_DIR)/word_embeddings
+
+# Program 31 Raylib 3D Visualizer Targets
+RAYLIB_INC = -I./external/raylib/src -I./external/sys_deps/usr/include -I./external/sys_deps/usr/include/x86_64-linux-gnu
+RAYLIB_LIB = ./external/raylib/src/libraylib.a -L./external/sys_deps/usr/lib/x86_64-linux-gnu -lGL -lm -lpthread -ldl -lrt -lX11
+
+build-31-raylib: $(BUILD_DIR)/word_embeddings_3d_raylib
+
+$(BUILD_DIR)/word_embeddings_3d_raylib: 31_word_embeddings_3d_raylib.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -Wno-missing-field-initializers $(RAYLIB_INC) $< $(RAYLIB_LIB) -o $@
+
+run-31-raylib: $(BUILD_DIR)/word_embeddings_3d_raylib
+	./$(BUILD_DIR)/word_embeddings_3d_raylib
+
 # Run ANY binary by specifying FILE=<name_without_cpp>
 run: $(BUILD_DIR)/$(FILE)
 	./$(BUILD_DIR)/$(FILE)
@@ -64,3 +103,5 @@ run: $(BUILD_DIR)/$(FILE)
 # Clean all binaries
 clean:
 	rm -rf $(BUILD_DIR)/*
+
+
