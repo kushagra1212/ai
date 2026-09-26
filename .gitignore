@@ -1,0 +1,6 @@
+# Build directories and binaries
+build/
+ai/build/
+*.o
+*.out
+*.bin

@@ -271,7 +271,7 @@ int main() {
     MultiClassCNN brain;
 
     std::cout << "--- 1. TRAINING THE MULTI-CLASS CONVOLUTIONAL BRAIN ---\n";
-    brain.train(dataset, 300, 0.20);
+    brain.train(dataset, 600, 0.25);
 
     std::cout << "\n--- 2. TESTING ON TRAINING SAMPLES ---\n";
     std::vector<std::string> class_names = {"Digit 0", "Digit 1", "Digit 2", "Digit 7"};

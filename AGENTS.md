@@ -13,3 +13,7 @@
 
 ## 3. First-Principles Implementation
 - Build concepts from scratch (arrays, loops, simple math) before introducing third-party abstractions.
+
+## 4. Build Output Directory
+- **Always compile C++ binaries into a `build/` directory** (e.g. `g++ ... -o build/<binary_name> && ./build/<binary_name>`), never into the source folder.
+- Ensure `build/` is gitignored so the repository stays clean.
