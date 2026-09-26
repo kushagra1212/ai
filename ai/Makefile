@@ -96,6 +96,33 @@ $(BUILD_DIR)/word_embeddings_3d_raylib: 31_word_embeddings_3d_raylib.cpp | $(BUI
 run-31-raylib: $(BUILD_DIR)/word_embeddings_3d_raylib
 	./$(BUILD_DIR)/word_embeddings_3d_raylib
 
+# Program 31 Semantic Search Engine GUI Targets
+build-search: $(BUILD_DIR)/semantic_search_engine_gui
+
+$(BUILD_DIR)/semantic_search_engine_gui: 31_semantic_search_engine_gui.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -Wno-missing-field-initializers $(RAYLIB_INC) $< $(RAYLIB_LIB) -o $@
+
+run-search: $(BUILD_DIR)/semantic_search_engine_gui
+	./$(BUILD_DIR)/semantic_search_engine_gui
+
+# Program 31B Local File Vector Database CLI Targets
+build-31b: $(BUILD_DIR)/local_file_vector_db
+
+$(BUILD_DIR)/local_file_vector_db: 31b_local_file_vector_db.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -fopenmp $< -o $@
+
+run-31b: $(BUILD_DIR)/local_file_vector_db
+	./$(BUILD_DIR)/local_file_vector_db demo
+
+# Program 32 Targets (The First Neural Next-Word Predictor)
+build-32: $(BUILD_DIR)/neural_next_word_predictor
+
+$(BUILD_DIR)/neural_next_word_predictor: 32_neural_next_word_predictor.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+run-32: $(BUILD_DIR)/neural_next_word_predictor
+	./$(BUILD_DIR)/neural_next_word_predictor
+
 # Run ANY binary by specifying FILE=<name_without_cpp>
 run: $(BUILD_DIR)/$(FILE)
 	./$(BUILD_DIR)/$(FILE)
@@ -103,5 +130,7 @@ run: $(BUILD_DIR)/$(FILE)
 # Clean all binaries
 clean:
 	rm -rf $(BUILD_DIR)/*
+
+
 
 

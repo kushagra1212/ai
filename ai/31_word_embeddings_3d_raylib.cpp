@@ -208,11 +208,13 @@ int main() {
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_WINDOW_RESIZABLE);
     InitWindow(screen_width, screen_height, "Program 31: 3D Interactive Word Embeddings (First Principles AI)");
 
-    // Load High-Res TrueType font for crisp typography
-    Font font_bold = LoadFontEx("/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf", 40, 0, 0);
-    Font font_reg  = LoadFontEx("/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf", 36, 0, 0);
-    SetTextureFilter(font_bold.texture, TEXTURE_FILTER_BILINEAR);
-    SetTextureFilter(font_reg.texture,  TEXTURE_FILTER_BILINEAR);
+    // Load High-Res TrueType font for crisp typography at exact target size
+    Font font_bold  = LoadFontEx("/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf", 20, 0, 0);
+    Font font_title = LoadFontEx("/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf", 24, 0, 0);
+    Font font_reg   = LoadFontEx("/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf", 15, 0, 0);
+    SetTextureFilter(font_bold.texture,  TEXTURE_FILTER_BILINEAR);
+    SetTextureFilter(font_title.texture, TEXTURE_FILTER_BILINEAR);
+    SetTextureFilter(font_reg.texture,   TEXTURE_FILTER_BILINEAR);
 
     // Spherical coordinates for smooth mouse orbiting
     float cam_yaw = 0.85f;        // Horizontal angle
@@ -534,6 +536,7 @@ int main() {
     }
 
     UnloadFont(font_bold);
+    UnloadFont(font_title);
     UnloadFont(font_reg);
     CloseWindow();
     return 0;
