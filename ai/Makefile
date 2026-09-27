@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -O3 -std=c++17 -Wall -Wextra
+CXXFLAGS = -O3 -std=c++17 -Wall -Wextra -mavx2 -mfma -ffast-math
 BUILD_DIR = build
 
 .PHONY: all clean help train-26 test-26 train-28
@@ -158,6 +158,83 @@ $(BUILD_DIR)/self_attention_visualizer_raylib: 35_self_attention_visualizer_rayl
 
 run-35-raylib: $(BUILD_DIR)/self_attention_visualizer_raylib
 	./$(BUILD_DIR)/self_attention_visualizer_raylib
+
+# Program 35 Raylib Live Training & Heatmap Visualizer
+build-35-training-raylib: $(BUILD_DIR)/self_attention_training_visualizer
+
+$(BUILD_DIR)/self_attention_training_visualizer: 35_self_attention_training_visualizer.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -Wno-missing-field-initializers $(RAYLIB_INC) $< $(RAYLIB_LIB) -o $@
+
+run-35-training-raylib: $(BUILD_DIR)/self_attention_training_visualizer
+	./$(BUILD_DIR)/self_attention_training_visualizer
+
+
+# Program 35B Benchmark (Dynamic Learning Rate)
+build-35b: $(BUILD_DIR)/self_attention_dynamic_lr
+
+$(BUILD_DIR)/self_attention_dynamic_lr: 35b_self_attention_dynamic_lr.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+run-35b: $(BUILD_DIR)/self_attention_dynamic_lr
+	./$(BUILD_DIR)/self_attention_dynamic_lr
+
+# Program 35C / 36B: Scaling Causal Self-Attention to Real Datasets (OpenMP)
+build-35c: $(BUILD_DIR)/self_attention_real_data
+build-36b: build-35c
+
+$(BUILD_DIR)/self_attention_real_data: 35c_self_attention_real_data.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -fopenmp $< -o $@
+
+run-35c: $(BUILD_DIR)/self_attention_real_data
+	./$(BUILD_DIR)/self_attention_real_data
+
+run-36b: run-35c
+
+# Program 36: Deep 4-Layer Transformer on Conversational Chat Data
+build-36: $(BUILD_DIR)/deep_chat_transformer
+
+$(BUILD_DIR)/deep_chat_transformer: 36_deep_chat_transformer.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -fopenmp $< -o $@
+
+run-36: $(BUILD_DIR)/deep_chat_transformer
+	./$(BUILD_DIR)/deep_chat_transformer
+
+# Program 37: Multi-Head Attention Transformer (H=4 Heads, D=64, D_ff=256, Zero-UNK Subwords)
+build-37: $(BUILD_DIR)/multihead_chat_transformer
+
+$(BUILD_DIR)/multihead_chat_transformer: 37_multihead_chat_transformer.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -fopenmp $< -o $@
+
+run-37: $(BUILD_DIR)/multihead_chat_transformer
+	./$(BUILD_DIR)/multihead_chat_transformer
+
+# Program 38: Heterogeneous 4-Layer Brain (Local Filter, Two-Tier Memory, Shared-KV MQA, FP32)
+build-38: $(BUILD_DIR)/heterogeneous_chat_brain
+
+$(BUILD_DIR)/heterogeneous_chat_brain: 38_heterogeneous_chat_brain.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -fopenmp $< -o $@
+
+run-38: $(BUILD_DIR)/heterogeneous_chat_brain
+	./$(BUILD_DIR)/heterogeneous_chat_brain
+
+# Program 39: Universal Multi-Domain Brain (D=128, H=8, Content-Addressable Memory, L3-Cache Resident)
+build-39: $(BUILD_DIR)/universal_multidomain_brain
+
+$(BUILD_DIR)/universal_multidomain_brain: 39_universal_multidomain_brain.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -fopenmp $< -o $@
+
+run-39: $(BUILD_DIR)/universal_multidomain_brain
+	./$(BUILD_DIR)/universal_multidomain_brain
+
+# Program 40: Grand Unified Brain (Two-Hop Reasoning, Weight Tying, FP32, L3-Cache Resident)
+build-40: $(BUILD_DIR)/grand_unified_brain
+
+$(BUILD_DIR)/grand_unified_brain: 40_grand_unified_brain.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -fopenmp $< -o $@
+
+run-40: $(BUILD_DIR)/grand_unified_brain
+	./$(BUILD_DIR)/grand_unified_brain
+
 
 # Run ANY binary by specifying FILE=<name_without_cpp>
 run: $(BUILD_DIR)/$(FILE)
