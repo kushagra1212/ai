@@ -123,6 +123,42 @@ $(BUILD_DIR)/neural_next_word_predictor: 32_neural_next_word_predictor.cpp | $(B
 run-32: $(BUILD_DIR)/neural_next_word_predictor
 	./$(BUILD_DIR)/neural_next_word_predictor
 
+# Program 33 Targets (Dynamic-Context RNN & Adam Optimizer)
+build-33: $(BUILD_DIR)/rnn_dynamic_context_adam
+
+$(BUILD_DIR)/rnn_dynamic_context_adam: 33_rnn_dynamic_context_adam.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+run-33: $(BUILD_DIR)/rnn_dynamic_context_adam
+	./$(BUILD_DIR)/rnn_dynamic_context_adam
+
+# Program 34 Targets (Gated Memory LSTM & Adam Optimizer)
+build-34: $(BUILD_DIR)/lstm_gated_memory_adam
+
+$(BUILD_DIR)/lstm_gated_memory_adam: 34_lstm_gated_memory_adam.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+run-34: $(BUILD_DIR)/lstm_gated_memory_adam
+	./$(BUILD_DIR)/lstm_gated_memory_adam
+
+# Program 35 Targets (Causal Self-Attention Engine & Adam Optimizer)
+build-35: $(BUILD_DIR)/self_attention_engine
+
+$(BUILD_DIR)/self_attention_engine: 35_self_attention_engine.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+run-35: $(BUILD_DIR)/self_attention_engine
+	./$(BUILD_DIR)/self_attention_engine
+
+# Program 35 Raylib Visualizer
+build-35-raylib: $(BUILD_DIR)/self_attention_visualizer_raylib
+
+$(BUILD_DIR)/self_attention_visualizer_raylib: 35_self_attention_visualizer_raylib.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -Wno-missing-field-initializers $(RAYLIB_INC) $< $(RAYLIB_LIB) -o $@
+
+run-35-raylib: $(BUILD_DIR)/self_attention_visualizer_raylib
+	./$(BUILD_DIR)/self_attention_visualizer_raylib
+
 # Run ANY binary by specifying FILE=<name_without_cpp>
 run: $(BUILD_DIR)/$(FILE)
 	./$(BUILD_DIR)/$(FILE)
